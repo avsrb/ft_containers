@@ -6,8 +6,6 @@
 #define FT_CONTAINERS_STACK_HPP
 
 #include <vector>
-
-
 namespace ft {
 	template<class T, class Container = std::vector<T> >
 	class Stack {
