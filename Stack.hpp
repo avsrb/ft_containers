@@ -18,21 +18,18 @@ namespace ft {
 		typedef typename Container::size_type			size_type;
 		typedef typename Container::reference			reference;
 		typedef typename Container::const_reference		const_reference;
-		
-		explicit Stack(const Container &container = Container()) {
-			_container = container;
-		};
-		Stack(const Stack &other) {
-			_container = other._container;
-		};
+
+        explicit Stack(const container_type& cont = container_type()) : _container(cont) {}
+        Stack(const Stack& s) : _container(s._container) {}
+        Stack& operator=(const Stack& s) {
+            if (this != &s) {
+                _container = s._container;
+            }
+            return (*this);
+        }
+
 		~Stack() { };
-		Stack& operator=(const Stack &other) {
-			if (this == &other) {
-				return *this;
-			}
-			_container = other._container;
-			return *this;
-		};
+
 		reference top() {
 			return _container.back();
 		};
