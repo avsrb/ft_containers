@@ -5,9 +5,8 @@
 #ifndef FT_CONTAINERS_VECTOR_HPP
 #define FT_CONTAINERS_VECTOR_HPP
 
-#include <memory>
-#include <algorithm>
-#include <curses.h>
+#include "Iterator.hpp"
+#include <iostream>
 
 namespace ft {
 	template < class T, class A = std::allocator<T> >
@@ -77,7 +76,7 @@ namespace ft {
 			return *this;
 		};
 
-		void assign(size_type count, const_reference value ) {
+		void assign(size_type count, const_reference value) {
 			if (count < 0)
 				throw std::out_of_range("Vector");
 			this->clear();
@@ -185,7 +184,7 @@ namespace ft {
 		};
 
 		template <class InputIt>
-		typename ft::enable_if<!ft::is_integral<InputIt>::value, void>::type insert( iterator pos, InputIt first, InputIt last) {
+		typename ft::enable_if<!ft::is_integral<InputIt>::value, void>::type insert(iterator pos, InputIt first, InputIt last) {
 			size_t range_size = last - first;
 			if (!validate_iterator_values(first, last, range_size))
 				throw std::exception();
@@ -256,7 +255,7 @@ namespace ft {
 			}
 		}
 
-		void swap( Vector& other ) {
+		void swap(Vector& other) {
 			std::swap(_size, other._size);
 			std::swap(_capacity, other._capacity);
 			std::swap(buffer, other.buffer);
