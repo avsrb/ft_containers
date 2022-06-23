@@ -2,8 +2,8 @@
 // Created by Melinda Shmelly on 6/21/22.
 //
 
-#ifndef FT_CONTAINERS_UTILITY_HPP
-#define FT_CONTAINERS_UTILITY_HPP
+#ifndef FT_CONTAINERS_UTILS_HPP
+#define FT_CONTAINERS_UTILS_HPP
 
 #include <cfloat>
 #include <iostream>
@@ -125,4 +125,4 @@ namespace std {
 }
 
 
-#endif //FT_CONTAINERS_UTILITY_HPP
+#endif //FT_CONTAINERS_UTILS_HPP
