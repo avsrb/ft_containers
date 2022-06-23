@@ -167,11 +167,11 @@ namespace ft {
 				}
 			}
 			for (int i = _size; i >= 0; --i) {
-				if (i == index) {
-					for (; count > 0; --count) {
+				if (i == index+count-1) {
+					for (; count > 0; --count, --i) {
 						buffer[i] = value;
-						return;
 					}
+					return;
 				}
 				buffer[i] = buffer[i - count];
 			}
