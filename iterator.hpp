@@ -138,16 +138,16 @@ namespace ft {
 		node_iterator	&operator++() 											{ next(); return *this; }
 		node_iterator	operator--(int)											{ node_iterator tmp(*this); prev(); return tmp; }
 		node_iterator	&operator--() 											{ prev(); return *this; }
-		reference 	operator*()		 											{ return *(node->pair); }
+		reference 		operator*()		 											{ return *(node->pair); }
 		const_reference operator*() const										{ return *(node->pair); }
-		pointer 	operator->()												{ return node->pair; }
+		pointer 		operator->()												{ return node->pair; }
 		const_pointer 	operator->() const										{ return node->pair; }
-		bool		operator==(node_iterator const &obj) const 					{ return node == obj.node; };
-		bool		operator!=(node_iterator const &obj) const 					{ return node != obj.node; };
-		bool 		operator>(node_iterator const &obj) const 					{ return node->pair > obj.node->pair; };
-		bool 		operator<(node_iterator const &obj) const 					{ return obj.node->pair > node->pair; };
-		bool 		operator<=(node_iterator const &obj) const 					{ return node->pair <= obj.node->pair; };
-		bool 		operator>=(node_iterator const &obj) const 					{ return node->pair >= obj.node->pair; };
+		bool			operator==(node_iterator const &obj) const 					{ return node == obj.node; };
+		bool			operator!=(node_iterator const &obj) const 					{ return node != obj.node; };
+		bool 			operator>(node_iterator const &obj) const 					{ return node->pair > obj.node->pair; };
+		bool 			operator<(node_iterator const &obj) const 					{ return obj.node->pair > node->pair; };
+		bool 			operator<=(node_iterator const &obj) const 					{ return node->pair <= obj.node->pair; };
+		bool 			operator>=(node_iterator const &obj) const 					{ return node->pair >= obj.node->pair; };
 	};
 
 	template <class T>
