@@ -25,53 +25,53 @@ namespace ft {
 		typedef ft::reverse_iterator<iterator> 				reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 	private:
-		pointer												buffer;
+		pointer												_buffer;
 		size_type 											_capacity;
 		size_type 											_size;
-		allocator_type										allocator;
+		allocator_type										_allocator;
 	public:
 
 		/*********************CONSTRUCTORS AND DESTRUCTORS**********************/
-		explicit Vector(const A& alloc = A()) : buffer(0), _capacity(0), _size(0), allocator(alloc) {}
+		explicit Vector(const A& alloc = A()) : _buffer(0), _capacity(0), _size(0), _allocator(alloc) {}
 
 		Vector(size_type count, const_reference value = value_type(), const A& alloc = A()) {
 			if (count < 0)
 				throw std::out_of_range("Vector");
-			allocator = alloc;
+			_allocator = alloc;
 			_capacity = _size = count;
-			buffer = allocator.allocate(_capacity);
+			_buffer = _allocator.allocate(_capacity);
 			for (size_t i = 0; i < count; ++i)
-				buffer[i] = value;
+				_buffer[i] = value;
 		};
 
 		template <class InputIterator>
 		Vector(InputIterator first, InputIterator last, const A& alloc = A(),
-			   typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type* = 0) : _capacity(0), _size(0), allocator(alloc) {
-			buffer = allocator.allocate(_capacity);
+			   typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type* = 0) : _capacity(0), _size(0), _allocator(alloc) {
+			_buffer = _allocator.allocate(_capacity);
 			this->assign(first, last);
 		};
 
-		Vector(const Vector& other) : buffer(0), _capacity(other._capacity), _size(other._size), allocator(other.get_allocator()) {
-			buffer = allocator.allocate(other._capacity);
+		Vector(const Vector& other) : _buffer(0), _capacity(other._capacity), _size(other._size), _allocator(other.get_allocator()) {
+			_buffer = _allocator.allocate(other._capacity);
 			for (size_t i = 0; i < _size; i++)
-				buffer[i] = other.buffer[i];
+				_buffer[i] = other._buffer[i];
 		};
 
 		~Vector() {
 			this->clear();
-			allocator.deallocate(buffer, _capacity);
+			_allocator.deallocate(_buffer, _capacity);
 		};
 
 		Vector& operator=(const Vector& other) {
 			if (this == &other)
 				return *this;
 			this->clear();
-			allocator.deallocate(buffer, _capacity);
+			_allocator.deallocate(_buffer, _capacity);
 			_capacity = other._capacity;
 			_size = other._size;
-			buffer = allocator.allocate(_capacity);
+			_buffer = _allocator.allocate(_capacity);
 			for (size_t i = 0; i < _size; ++i) {
-				buffer[i] = other.buffer[i];
+				_buffer[i] = other._buffer[i];
 			}
 			return *this;
 		};
@@ -82,7 +82,7 @@ namespace ft {
 			this->clear();
 			this->reserve(count);
 			for (size_t i = 0; i < count; ++i, _size++)
-				buffer[i] = value;
+				_buffer[i] = value;
 		};
 
 		template <class InputIterator>
@@ -96,37 +96,37 @@ namespace ft {
 			}
 		};
 
-		allocator_type get_allocator() const { return this->allocator; };
+		allocator_type get_allocator() const { return this->_allocator; };
 
 		/*************************MEMBER FUNCTIONS******************************/
 		reference at(size_type pos) {
 			if (pos >= _size)
 				throw std::out_of_range("Vector");
-			return buffer[pos];
+			return _buffer[pos];
 		};
 
 		const_reference at(size_type pos) const {
 			if (pos >= _size)
 				throw std::out_of_range("Vector");
-			return buffer[pos];
+			return _buffer[pos];
 		};
 
-		reference				operator[](size_type pos)			{ return buffer[pos]; };
-		const_reference 		operator[](size_type pos) const	{ return buffer[pos]; };
-		reference				front()								{ return *buffer; };
-		const_reference 		front() const						{ return *buffer; };
-		reference				back()								{ return buffer[_size - 1]; };
-		const_reference			back() const						{ return buffer[_size - 1]; };
-		pointer 				data()								{ return buffer; };
-		const_pointer			data() const						{ return buffer; };
-		iterator 				begin()								{ return iterator(buffer); };
-		const_iterator 			begin() const						{ return const_iterator(buffer); };
-		iterator 				end()								{ return iterator(buffer + _size); };
-		const_iterator 			end() const							{ return const_iterator(buffer + _size); };
-		reverse_iterator 		rbegin()							{ return reverse_iterator(iterator(buffer + _size - 1)); };
-		const_reverse_iterator 	rbegin() const						{ return const_reverse_iterator(const_iterator(buffer + _size - 1)); };
-		reverse_iterator 		rend()								{ return reverse_iterator(iterator(buffer - 1)); };
-		const_reverse_iterator	rend() const						{ return const_reverse_iterator(const_iterator(buffer - 1)); };
+		reference				operator[](size_type pos)			{ return _buffer[pos]; };
+		const_reference 		operator[](size_type pos) const	{ return _buffer[pos]; };
+		reference				front()								{ return *_buffer; };
+		const_reference 		front() const						{ return *_buffer; };
+		reference				back()								{ return _buffer[_size - 1]; };
+		const_reference			back() const						{ return _buffer[_size - 1]; };
+		pointer 				data()								{ return _buffer; };
+		const_pointer			data() const						{ return _buffer; };
+		iterator 				begin()								{ return iterator(_buffer); };
+		const_iterator 			begin() const						{ return const_iterator(_buffer); };
+		iterator 				end()								{ return iterator(_buffer + _size); };
+		const_iterator 			end() const							{ return const_iterator(_buffer + _size); };
+		reverse_iterator 		rbegin()							{ return reverse_iterator(iterator(_buffer + _size - 1)); };
+		const_reverse_iterator 	rbegin() const						{ return const_reverse_iterator(const_iterator(_buffer + _size - 1)); };
+		reverse_iterator 		rend()								{ return reverse_iterator(iterator(_buffer - 1)); };
+		const_reverse_iterator	rend() const						{ return const_reverse_iterator(const_iterator(_buffer - 1)); };
 		bool 					empty() const						{ return _size <= 0; };
 		size_type				size() const						{ return _size; };
 		size_type				capacity() const					{ return _capacity; };
@@ -137,18 +137,18 @@ namespace ft {
 
 		void reserve(size_type size) {
 			if (size > _capacity) {
-				T* tmp = allocator.allocate(size);
+				T* tmp = _allocator.allocate(size);
 				for (size_t i = 0; i < _size; ++i)
-					tmp[i] = buffer[i];
-				if (buffer) allocator.deallocate(buffer, _capacity);
+					tmp[i] = _buffer[i];
+				if (_buffer) _allocator.deallocate(_buffer, _capacity);
 				_capacity = size;
-				buffer = tmp;
+				_buffer = tmp;
 			}
 		};
 
 		void clear() {
 			for (size_type i = 0; i < _size; i++) {
-				allocator.destroy(buffer + i);
+				_allocator.destroy(_buffer + i);
 			}
 			_size = 0;
 		};
@@ -169,18 +169,18 @@ namespace ft {
 			for (int i = _size; i >= 0; --i) {
 				if (i == index+count-1) {
 					for (; count > 0; --count, --i) {
-						buffer[i] = value;
+						_buffer[i] = value;
 					}
 					return;
 				}
-				buffer[i] = buffer[i - count];
+				_buffer[i] = _buffer[i - count];
 			}
 		};
 
 		iterator insert(iterator pos, const_reference value) {
 			int index = pos - begin();
 			this->insert(pos, 1, value);
-			return iterator(buffer + index);
+			return iterator(_buffer + index);
 		};
 
 		template <class InputIt>
@@ -203,18 +203,18 @@ namespace ft {
 			for (int i = _size - 1; i >= 0; --i) {
 				if (i == last_index) {
 					for (; range_size > 0; --range_size, --i) {
-						buffer[i] = *--last;
+						_buffer[i] = *--last;
 					}
 					return;
 				}
-				buffer[i] = buffer[i - range_size];
+				_buffer[i] = _buffer[i - range_size];
 			}
 		};
 
 		iterator erase(iterator pos) {
 			int index = pos - begin();
 			for (size_t i = index; i < _size; ++i) {
-				buffer[i] = buffer[i + 1];
+				_buffer[i] = _buffer[i + 1];
 			}
 			_size--;
 			return pos;
@@ -226,20 +226,20 @@ namespace ft {
 			int offset = end - start;
 			_size -= offset;
 			for (size_t i = start; i < _size; ++i) {
-				buffer[i] = buffer[i + offset];
+				_buffer[i] = _buffer[i + offset];
 			}
-			return buffer + start;
+			return _buffer + start;
 		}
 
 		void push_back(const_reference value) {
 			if (_size == _capacity)
 				(!_capacity) ? this->reserve(1) : this->reserve(_capacity * 2);
-			buffer[_size] = value;
+			_buffer[_size] = value;
 			++_size;
 		};
 
 		void pop_back() {
-			allocator.destroy(buffer + _size);
+			_allocator.destroy(_buffer + _size);
 			_size--;
 		}
 
@@ -258,8 +258,8 @@ namespace ft {
 		void swap(Vector& other) {
 			std::swap(_size, other._size);
 			std::swap(_capacity, other._capacity);
-			std::swap(buffer, other.buffer);
-			std::swap(allocator, other.allocator);
+			std::swap(_buffer, other._buffer);
+			std::swap(_allocator, other._allocator);
 		}
 
 		/****************************OPERATORS**********************************/
@@ -320,14 +320,14 @@ namespace ft {
 		typename ft::enable_if<!ft::is_integral<InputIt>::value, bool>::type
 		validate_iterator_values(InputIt first, InputIt last, size_t range) {
 			pointer reserved_buffer;
-			reserved_buffer = allocator.allocate(range);
+			reserved_buffer = _allocator.allocate(range);
 			bool result = true;
 			size_t i = 0;
 			for (;first != last; ++first, ++i) {
 				try { reserved_buffer[i] = *first; }
 				catch (...) { result = false; break; }
 			}
-			allocator.deallocate(reserved_buffer, range);
+			_allocator.deallocate(reserved_buffer, range);
 			return result;
 		}
 	};
